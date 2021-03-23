@@ -8,6 +8,11 @@ const app = express();
  */
 app.set('view engine','ejs');
 
+/**
+ * carregando arquivos staticos
+ */
+app.use(express.static('public'));
+
 app.get('/', (request, response) => {
     response.render('index');
 });
