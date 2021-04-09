@@ -1,0 +1,11 @@
+<%- include('partials/head'); -%>
+
+    <body>
+        <header class="pb-4">
+            <%- include('partials/nav_bar'); -%>
+        </header>
+        <div class="container">
+            <h3><%= question.title %></h3>
+            <p><%= question.description %></p>
+        </div>
+        <%- include('partials/footer'); -%>

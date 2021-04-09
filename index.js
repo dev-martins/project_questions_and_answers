@@ -36,7 +36,11 @@ app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
 
-    Question.findAll({ raw: true }).then((questions) => {
+    Question.findAll({ raw: true, order:[
+        [
+            'id','DESC'
+        ]
+    ]}).then((questions) => {
         console.log(questions);
         response.render('index',{
             questions: questions
@@ -48,13 +52,30 @@ app.get('/questions', (request, response) => {
     response.render('questions');
 });
 
+app.get('/question/:id',(request,response) => {
+
+    Question.findOne({
+        where:{
+            id: request.params.id
+        }
+    }).then(question => {
+        if(question){
+            response.render('single-question',{
+                question:question
+            });
+        }else{
+            response.redirect('/');
+        }
+    });
+})
+
 app.post('/send_reply', (request, response) => {
 
     Question.create({
         title: request.body.title,
         description: request.body.description
     }).then(() => {
-        response.redirect('/questions');
+        response.redirect('/');
     })
 })
 
