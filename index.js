@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const connection = require('./database/conectDatabase');
-const questionsModel = require('./database/question')
+const Question = require('./database/question');
 /**
  * configurando a conexão com o banco de dados
  */
@@ -35,7 +35,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
-    response.render('index');
+
+    Question.findAll({ raw: true }).then((questions) => {
+        console.log(questions);
+        response.render('index',{
+            questions: questions
+        });
+    })
 });
 
 app.get('/questions', (request, response) => {
@@ -43,8 +49,13 @@ app.get('/questions', (request, response) => {
 });
 
 app.post('/send_reply', (request, response) => {
-    let description = request.body.description;
-    response.send(`Descrição da pergunta: <strong>${description}</strong>`);
+
+    Question.create({
+        title: request.body.title,
+        description: request.body.description
+    }).then(() => {
+        response.redirect('/questions');
+    })
 })
 
 app.listen('8001', () => {
