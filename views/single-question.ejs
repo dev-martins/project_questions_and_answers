@@ -5,7 +5,36 @@
             <%- include('partials/nav_bar'); -%>
         </header>
         <div class="container">
-            <h3><%= question.title %></h3>
-            <p><%= question.description %></p>
+            <p class="text-uppercase">Responder</p>
+            <h3>
+                <%= question.title %>
+            </h3>
+            <p>
+                <%= question.description %>
+            </p>
+
+            <form method="POST" action="/response">
+                <div class="mb-3">
+                    <label for="resposta" class="form-label">Resposta:</label>
+                    <textarea class="form-control" placeholder="Digite sua resposta" id="resposta"
+                        name="response"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" name="responseId" value="<%= question.id %>">
+                </div>
+                <button type="submit" class="btn btn-primary">Responder</button>
+            </form>
+
+            <h5 class="mt-3">Respostas: <%= responses.length %></h5>
+            <% responses.forEach(response=> { %>
+                <div class="card mb-3 mt-3 border border-info">
+                    <div class="card-body">
+                        <%= response.description %>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <a href="/question/<%= question.id %>" class="btn btn-success">Responder</a>
+                    </div> -->
+                </div>
+                <%})%>
         </div>
         <%- include('partials/footer'); -%>

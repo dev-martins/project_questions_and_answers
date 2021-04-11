@@ -5,10 +5,10 @@
             <%- include('partials/nav_bar'); -%>
         </header>
         <div class="container">
-            <h1>Perguntas</h1>
+            <p class="text-uppercase">Perguntas: <%= questions.length %></p>
             <a href="/questions" class="btn btn-primary mt-4 mb-4">Perguntar</a>
             <% questions.forEach(question=> { %>
-                <div class="card">
+                <div class="card mb-3 border border-success">
                     <div class="card-body">
                         <%= question.title %>
                     </div>
